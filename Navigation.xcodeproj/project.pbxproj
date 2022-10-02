@@ -38,6 +38,8 @@
 		C7FA3331281E937E00F708C2 /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FA3330281E937E00F708C2 /* PhotosViewController.swift */; };
 		C7FA3335281EF73B00F708C2 /* PhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FA3334281EF73B00F708C2 /* PhotosCollectionViewCell.swift */; };
 		C7FA3337281F123700F708C2 /* PhotosModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FA3336281F123700F708C2 /* PhotosModel.swift */; };
+		C7FF625A28E8D44D00FB6D69 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FF625928E8D44D00FB6D69 /* NetworkService.swift */; };
+		C7FF625C28E8D4D100FB6D69 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FF625B28E8D4D100FB6D69 /* AppConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +75,8 @@
 		C7FA3330281E937E00F708C2 /* PhotosViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		C7FA3334281EF73B00F708C2 /* PhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		C7FA3336281F123700F708C2 /* PhotosModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosModel.swift; sourceTree = "<group>"; };
+		C7FF625928E8D44D00FB6D69 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		C7FF625B28E8D4D100FB6D69 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,7 @@
 				C7D593D028E058010061E079 /* RegistraionService.swift */,
 				C7D593D428E06C580061E079 /* RefreshTokenService.swift */,
 				C7D593D828E081CC0061E079 /* UserDefaultsService.swift */,
+				C7FF625928E8D44D00FB6D69 /* NetworkService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 			isa = PBXGroup;
 			children = (
 				C7D593E028E238E40061E079 /* AppError.swift */,
+				C7FF625B28E8D4D100FB6D69 /* AppConfiguration.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -319,6 +325,7 @@
 				C7D593D528E06C580061E079 /* RefreshTokenService.swift in Sources */,
 				C7A62C1C27D24B1C000CF42B /* ProfileViewController.swift in Sources */,
 				C759180927F6F623004DB176 /* UIImage+Extension.swift in Sources */,
+				C7FF625C28E8D4D100FB6D69 /* AppConfiguration.swift in Sources */,
 				C73DB28C287B5AB700A8890B /* CustomButton.swift in Sources */,
 				C7FA332D281C6B9100F708C2 /* PhotosTableViewCell.swift in Sources */,
 				C7E32E3A2809D9FE007D4481 /* PostModel.swift in Sources */,
@@ -339,6 +346,7 @@
 				C7E32E3E280ABAF4007D4481 /* UIView+Extension.swift in Sources */,
 				C7B9649727DF4958003AD7C1 /* ProfileHeaderView.swift in Sources */,
 				C7FA3335281EF73B00F708C2 /* PhotosCollectionViewCell.swift in Sources */,
+				C7FF625A28E8D44D00FB6D69 /* NetworkService.swift in Sources */,
 				C7FA332F281DD35400F708C2 /* PhotosView.swift in Sources */,
 				C73F142D2880A61300ED61E7 /* FeedModel.swift in Sources */,
 			);
