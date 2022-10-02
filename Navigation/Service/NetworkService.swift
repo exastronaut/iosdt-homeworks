@@ -7,20 +7,9 @@
 
 import Foundation
 
-struct NetworkService: NetworkServiceProtocol {
+struct NetworkService {
 
-    static func request(for configuration: AppConfiguration) {
-        var stringURL = ""
-
-        switch configuration {
-        case .people:
-            stringURL = configuration.rawValue
-        case .starships:
-            stringURL = configuration.rawValue
-        case .planets:
-            stringURL = configuration.rawValue
-        }
-
+    static func request(for stringURL: String) {
         guard let url = URL(string: stringURL) else { return }
 
         let session = URLSession.shared

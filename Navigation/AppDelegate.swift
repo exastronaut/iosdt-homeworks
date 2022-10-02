@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let appConfiguration = AppConfiguration.people
 
-        NetworkService.request(for: appConfiguration)
+        NetworkService.request(for: appConfiguration.rawValue)
 
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = MainTabBarController()
