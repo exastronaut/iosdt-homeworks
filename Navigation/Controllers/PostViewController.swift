@@ -30,7 +30,7 @@ class PostViewController: UIViewController {
     }
 
     @objc func showInfoTapped() {
-        let infoViewController = InfoViewController()
+        let infoViewController = InfoViewController(service: NetworkService())
         let navigationController = UINavigationController(rootViewController: infoViewController)
         
         present(navigationController, animated: true, completion: nil)
