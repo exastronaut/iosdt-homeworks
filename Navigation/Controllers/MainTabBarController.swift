@@ -9,8 +9,7 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
 
-    private let registrationService = RegistrationService()
-    private let userDefaultsService = UserDefaultsService()
+    private let checkerService = CheckerService()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +23,7 @@ class MainTabBarController: UITabBarController {
             itemImage: "house"
         )
         let logInViewController = createNavigationController(
-            viewController: LogInViewController(registrationService: registrationService,
-                                                userDefaultsService: userDefaultsService),
+            viewController: LogInViewController(checkerService: checkerService),
             itemName: "Profile",
             itemImage: "person"
         )
