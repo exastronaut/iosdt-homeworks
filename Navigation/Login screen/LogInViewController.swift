@@ -5,6 +5,7 @@
 //  Created by Артем Свиридов on 29.03.2022.
 //
 
+import FirebaseAuth
 import UIKit
 
 final class LogInViewController: UIViewController {
@@ -12,8 +13,7 @@ final class LogInViewController: UIViewController {
     //MARK: - Properties
 
     private let notificationCenter = NotificationCenter.default
-    private let userDefaultsService: UserDefaultsServiceProtocol
-    private let registrationService: RegistrationServiceProtocol
+    private let checkerService: CheckerServiceProtocol
 
     private let scrollView: UIScrollView =  {
         let scrollView = UIScrollView()
@@ -90,12 +90,8 @@ final class LogInViewController: UIViewController {
 
     //MARK: - Initialization
 
-    init(
-        registrationService: RegistrationServiceProtocol,
-        userDefaultsService: UserDefaultsServiceProtocol
-    ) {
-        self.registrationService = registrationService
-        self.userDefaultsService = userDefaultsService
+    init(checkerService: CheckerServiceProtocol) {
+        self.checkerService = checkerService
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -103,7 +99,15 @@ final class LogInViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //MARK: - Lifecycle
+    //MARK: - Override functions
+
+    override func loadView() {
+        super.loadView()
+
+        if Auth.auth().currentUser != nil {
+            goToNextScreen()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,13 +136,20 @@ final class LogInViewController: UIViewController {
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         notificationCenter.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
 
     }
-    //MARK: - Methods
 
-    @objc private func keyboardShow(notification: NSNotification) {
+}
+
+//MARK: - Private functions
+
+private extension LogInViewController {
+
+    @objc
+    func keyboardShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey]
                                as? NSValue)?.cgRectValue {
             scrollView.contentInset.bottom = keyboardSize.height
@@ -150,7 +161,7 @@ final class LogInViewController: UIViewController {
     }
 
     @objc
-    private func keyboardHide() {
+    func keyboardHide() {
         scrollView.contentInset = .zero
         scrollView.verticalScrollIndicatorInsets = .zero
     }
@@ -158,12 +169,63 @@ final class LogInViewController: UIViewController {
     @objc
     func showProfile() {
         guard let login = logTextField.text,
-              let password = passwordTextField.text
-        else { return }
+              let password = passwordTextField.text,
+              (!login.isEmpty && !password.isEmpty)
+        else {
+            showAlert(with: .errorTitle, for: .errorEmptyFields)
+            return
+        }
 
-        getUserToken(login: login, password: password)
+        checkerService.checkCredentials(email: login, password: password) { [weak self] result in
+            guard let self = self else { return }
+
+            switch result {
+            case .success:
+                self.goToNextScreen()
+            case .failure(let errorCode):
+                self.checkError(with: errorCode.code.rawValue, for: login, password: password)
+            }
+        }
     }
 
+    func checkError(with code: Int, for login: String, password: String) {
+        switch code {
+        case 17008:
+            showAlert(with: .errorTitle, for: .error17008)
+        case 17009:
+            showAlert(with: .errorTitle, for: .error17009)
+        case 17011:
+            showCreateUserAlert(with: login, password: password)
+        default:
+            break
+        }
+    }
+
+    func showCreateUserAlert(with login: String, password: String) {
+        let message =  "Create user with login: \(login)?"
+
+        let signUpAction = UIAlertAction(title: .signUpAction, style: .default) { _ in
+            self.checkerService.signUp(email: login, password: password) { [weak self] result in
+                guard let self = self else { return }
+
+                switch result {
+                case .success:
+                    let action = UIAlertAction(title: .okAction, style: .default) { _ in
+                        self.goToNextScreen()
+                    }
+                    self.showAlert(with: .successTitle, for: .successMessage, actions: [action])
+                case .failure(let error):
+                    self.showAlert(with: .errorTitle, for: error.localizedDescription)
+
+                }
+            }
+        }
+
+        let cancelAction = UIAlertAction(title: .cancelAction, style: .cancel)
+        let actions = [signUpAction, cancelAction]
+
+        showAlert(with: .signUpTitle, for: message, actions: actions)
+    }
 
     private func customizeView() {
         view.backgroundColor = .white
@@ -210,22 +272,8 @@ final class LogInViewController: UIViewController {
 
 private extension LogInViewController {
 
-    func getUserToken(login: String, password: String) {
-        registrationService.getToken(login: login, password: password) { [weak self] result in
-            switch result {
-            case .success(let token):
-                self?.userDefaultsService.saveUserToken(token)
-                self?.goToNextScreen()
-            case.failure:
-                self?.showAlert(for: .unautorized)
-            }
-        }
-    }
-
     func goToNextScreen() {
-        let refreshTokenService = RefreshTokenService()
-        let profileViewController = ProfileViewController(refreshTokenService: refreshTokenService,
-                                                          userDefaultsService: userDefaultsService)
+        let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
     }
 
