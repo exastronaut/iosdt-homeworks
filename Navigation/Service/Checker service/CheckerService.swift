@@ -36,7 +36,7 @@ struct CheckerService: CheckerServiceProtocol {
                 completion(.failure(errorCode))
             }
 
-            if let result = result {
+            if let result {
                 completion(.success(result))
             }
         }
