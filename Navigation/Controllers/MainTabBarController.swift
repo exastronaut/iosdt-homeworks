@@ -9,9 +9,6 @@ import UIKit
 
 class MainTabBarController: UITabBarController {
 
-    private let registrationService = RegistrationService()
-    private let userDefaultsService = UserDefaultsService()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTabBar()
@@ -24,8 +21,7 @@ class MainTabBarController: UITabBarController {
             itemImage: "house"
         )
         let logInViewController = createNavigationController(
-            viewController: LogInViewController(registrationService: registrationService,
-                                                userDefaultsService: userDefaultsService),
+            viewController: LogInViewController(),
             itemName: "Profile",
             itemImage: "person"
         )

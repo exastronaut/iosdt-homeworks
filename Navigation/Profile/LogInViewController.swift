@@ -12,8 +12,6 @@ final class LogInViewController: UIViewController {
     //MARK: - Properties
 
     private let notificationCenter = NotificationCenter.default
-    private let userDefaultsService: UserDefaultsServiceProtocol
-    private let registrationService: RegistrationServiceProtocol
 
     private let scrollView: UIScrollView =  {
         let scrollView = UIScrollView()
@@ -90,12 +88,7 @@ final class LogInViewController: UIViewController {
 
     //MARK: - Initialization
 
-    init(
-        registrationService: RegistrationServiceProtocol,
-        userDefaultsService: UserDefaultsServiceProtocol
-    ) {
-        self.registrationService = registrationService
-        self.userDefaultsService = userDefaultsService
+    init() {
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -211,21 +204,11 @@ final class LogInViewController: UIViewController {
 private extension LogInViewController {
 
     func getUserToken(login: String, password: String) {
-        registrationService.getToken(login: login, password: password) { [weak self] result in
-            switch result {
-            case .success(let token):
-                self?.userDefaultsService.saveUserToken(token)
-                self?.goToNextScreen()
-            case.failure:
-                self?.showAlert(for: .unautorized)
-            }
-        }
+        goToNextScreen()
     }
 
     func goToNextScreen() {
-        let refreshTokenService = RefreshTokenService()
-        let profileViewController = ProfileViewController(refreshTokenService: refreshTokenService,
-                                                          userDefaultsService: userDefaultsService)
+        let profileViewController = ProfileViewController()
         navigationController?.pushViewController(profileViewController, animated: true)
     }
 

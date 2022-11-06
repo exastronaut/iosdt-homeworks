@@ -10,9 +10,6 @@ final class ProfileViewController: UIViewController {
 
     //MARK: - Properties
 
-    private var timer: Timer?
-    private let refreshTokenService: RefreshTokenServiceProtocol
-    private let userDefaultsService: UserDefaultsServiceProtocol
     private let posts = PostModel.makeMockModel()
     private let profileHeader = ProfileHeaderView()
     private var isAvatarOpen = false
@@ -27,25 +24,6 @@ final class ProfileViewController: UIViewController {
         return table
     }()
 
-    //MARK: - Initialization
-
-    init(
-        refreshTokenService: RefreshTokenServiceProtocol,
-        userDefaultsService: UserDefaultsServiceProtocol
-    ) {
-        self.refreshTokenService = refreshTokenService
-        self.userDefaultsService = userDefaultsService
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    deinit {
-        disableTimer()
-    }
-
     //MARK: - Lifecycle
 
     override func viewDidLoad() {
@@ -54,7 +32,6 @@ final class ProfileViewController: UIViewController {
         customizeView()
         layout()
         setupGesture()
-        createTimer()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -77,65 +54,6 @@ final class ProfileViewController: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-
-}
-
-//MARK: - Private functions
-
-private extension ProfileViewController {
-
-    func createTimer() {
-        let queue = DispatchQueue(label: "ru.exastronaut.concurrent-queue", attributes: .concurrent)
-
-        let workItem = DispatchWorkItem {
-            self.timer = Timer.scheduledTimer(timeInterval: 300,
-                                              target: self,
-                                              selector: #selector(self.refreshToken),
-                                              userInfo: nil,
-                                              repeats: true)
-            self.timer?.tolerance = 0.2
-
-            guard let timer = self.timer else {
-                self.disableTimer()
-                return
-            }
-
-            RunLoop.current.add(timer, forMode: .common)
-            RunLoop.current.run()
-        }
-
-        queue.async(execute: workItem)
-    }
-
-    @objc
-    func refreshToken() {
-        do {
-            let token = try userDefaultsService.getUserToken()
-            getNewToken(token)
-        } catch {
-            DispatchQueue.main.async {
-                self.showAlert(for: .notFound)
-            }
-        }
-    }
-
-    func getNewToken(_ token: String) {
-        refreshTokenService.refreshToken(oldToken: token) { [weak self] result in
-            switch result {
-            case .success(let token):
-                self?.userDefaultsService.saveUserToken(token)
-            case .failure:
-                DispatchQueue.main.async {
-                    self?.showAlert(for: .noConnection)
-                }
-            }
-        }
-    }
-
-    func disableTimer() {
-        timer?.invalidate()
-        timer = nil
     }
 
 }
