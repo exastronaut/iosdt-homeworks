@@ -12,6 +12,7 @@ final class LogInViewController: UIViewController {
     //MARK: - Properties
 
     private let notificationCenter = NotificationCenter.default
+    private let databaseCoordinator: DatabaseCoordinatable
 
     private let scrollView: UIScrollView =  {
         let scrollView = UIScrollView()
@@ -78,7 +79,7 @@ final class LogInViewController: UIViewController {
         button.setTitle("Log In", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(showProfile), for: .touchUpInside)
+        button.addTarget(self, action: #selector(logInAction), for: .touchUpInside)
         button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(1), for: .normal)
         button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.8), for: .disabled)
         button.setBackgroundImage(UIImage(named: "blue_pixel")?.alpha(0.8), for: .selected)
@@ -88,7 +89,8 @@ final class LogInViewController: UIViewController {
 
     //MARK: - Initialization
 
-    init() {
+    init(databaseCoordinator: DatabaseCoordinatable = RealmCoordinator()) {
+        self.databaseCoordinator = databaseCoordinator
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -149,14 +151,41 @@ final class LogInViewController: UIViewController {
     }
 
     @objc
-    func showProfile() {
+    func logInAction() {
         guard let login = logTextField.text,
-              let password = passwordTextField.text
-        else { return }
+              let password = passwordTextField.text,
+              login.count > 4 && password.count > 4
+        else {
+            showAlert(title: .minFourCharactersTitle, message: .minFourCharactersMessage)
+            resetTextFields()
+            return
+        }
 
-        getUserToken(login: login, password: password)
+        let credentials = Credentials(username: login, password: password)
+        checkCredentials(credentials)
     }
 
+    private func checkCredentials(_ credentials: Credentials) {
+        let predicate = NSPredicate(format: "username == %@", credentials.username)
+        databaseCoordinator.fetch(UserCredentialsRealmModel.self, predicate: predicate) { result in
+            switch result {
+            case .success(let success):
+                if success.isEmpty {
+                    self.showCreateUserAlert(credentials)
+                } else {
+                    if credentials.password == success.first?.password {
+                        self.goToMainScreen()
+                        self.resetTextFields()
+                    } else {
+                        self.showAlert(title: .wrongPasswordTitle, message: .tryAgainMessage)
+                        self.passwordTextField.text = .emptyline
+                    }
+                }
+            case .failure(let failure):
+                self.showErrorAlert(with: failure.localizedDescription)
+            }
+        }
+    }
 
     private func customizeView() {
         view.backgroundColor = .white
@@ -203,13 +232,43 @@ final class LogInViewController: UIViewController {
 
 private extension LogInViewController {
 
-    func getUserToken(login: String, password: String) {
-        goToNextScreen()
+    func goToMainScreen() {
+        navigationController?.pushViewController(MainTabBarController(), animated: true)
     }
 
-    func goToNextScreen() {
-        let profileViewController = ProfileViewController()
-        navigationController?.pushViewController(profileViewController, animated: true)
+    func resetTextFields() {
+        logTextField.text = .emptyline
+        passwordTextField.text = .emptyline
+    }
+
+    func showErrorAlert(with message: String) {
+        showAlert(title: .errorTitle, message: message)
+        resetTextFields()
+    }
+
+    func showCreateUserAlert(_ credentials: Credentials) {
+        let createAction = UIAlertAction(title: "Create", style: .default) { _ in
+            self.createUser(with: credentials)
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            self.resetTextFields()
+        }
+
+        showAlert(title: .userNotFoundTitle, message: .userNotFoundMessage, actions: [createAction, cancelAction])
+    }
+
+    func createUser(with credentials: Credentials) {
+        databaseCoordinator.create(
+            UserCredentialsRealmModel.self,
+            keyedValues: [credentials.keyedValues]
+        ) { result in
+            switch result {
+            case .success:
+                self.passwordTextField.text = .emptyline
+            case .failure(let failure):
+                self.showErrorAlert(with: failure.localizedDescription)
+            }
+        }
     }
 
 }
@@ -221,7 +280,5 @@ extension LogInViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
     }
-
-
 
 }

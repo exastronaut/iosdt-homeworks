@@ -6,13 +6,11 @@
 //
 
 import UIKit
-import iOSIntPackage
 
 final class PhotosViewController: UIViewController {
 
     //MARK: - Properties
 
-    private let imageProcessor = ImageProcessor()
     private let photosModel = PhotosModel.makeMockModel()
     private var images = [UIImage]()
 
@@ -36,7 +34,6 @@ final class PhotosViewController: UIViewController {
 
         setupView()
         setupLayout()
-        configurePhotos()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,32 +47,6 @@ final class PhotosViewController: UIViewController {
 //MARK: - Private functions
 
 private extension PhotosViewController {
-
-    func configurePhotos() {
-        guard let photos = photosModel else { return }
-
-        let start = DispatchTime.now()
-
-        imageProcessor.processImagesOnThread(
-            sourceImages: photos,
-            filter: .chrome,
-            qos: .background
-        ) { cgImages in
-
-            cgImages.forEach { cgImage in
-                self.images.append(UIImage(cgImage: cgImage!))
-            }
-
-            let end = DispatchTime.now()
-
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-
-            let timeInterval = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000
-            print(timeInterval)
-        }
-    }
 
     func setupView() {
         view.backgroundColor = .systemBackground
