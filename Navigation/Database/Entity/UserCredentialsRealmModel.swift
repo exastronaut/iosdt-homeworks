@@ -11,6 +11,7 @@ import RealmSwift
 final class UserCredentialsRealmModel: Object {
     @objc dynamic var username: String = ""
     @objc dynamic var password: String = ""
+    @objc dynamic var isAuth: Bool = false
 
     override static func primaryKey() -> String? {
         return "username"

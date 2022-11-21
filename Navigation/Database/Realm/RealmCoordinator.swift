@@ -61,12 +61,16 @@ extension RealmCoordinator: DatabaseCoordinatable {
                     let realm = try Realm()
 
                     try self?.safeWrite(in: realm) {
-                        guard let modifiedObjects = fetchedObjects as? [Object] else {
+                        guard let modifiedObject = fetchedObjects.first as? Object else {
                             completion(.failure(.wrongModel))
                             return
                         }
 
-                        realm.add(modifiedObjects, update: .modified)
+                        keyedValues.forEach {
+                            modifiedObject.setValue($0.value, forKey: $0.key)
+                        }
+
+                        realm.add(modifiedObject, update: .modified)
                         completion(.success(fetchedObjects))
                     }
                 } catch {

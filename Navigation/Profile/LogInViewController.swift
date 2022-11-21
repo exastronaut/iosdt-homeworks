@@ -13,6 +13,8 @@ final class LogInViewController: UIViewController {
 
     private let notificationCenter = NotificationCenter.default
     private let databaseCoordinator: DatabaseCoordinatable
+    private let userDefaultsService: UserDefaultsServiceProtocol
+    private let username: String?
 
     private let scrollView: UIScrollView =  {
         let scrollView = UIScrollView()
@@ -89,9 +91,19 @@ final class LogInViewController: UIViewController {
 
     //MARK: - Initialization
 
-    init(databaseCoordinator: DatabaseCoordinatable = RealmCoordinator()) {
+    init(
+        databaseCoordinator: DatabaseCoordinatable = RealmCoordinator(),
+        userDefaultsService: UserDefaultsServiceProtocol = UserDefaultsService(),
+        username: String? = nil
+    ) {
         self.databaseCoordinator = databaseCoordinator
+        self.userDefaultsService = userDefaultsService
+        self.username = username
         super.init(nibName: nil, bundle: nil)
+
+        if let username = username {
+            logTextField.text = username
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -174,6 +186,19 @@ final class LogInViewController: UIViewController {
                     self.showCreateUserAlert(credentials)
                 } else {
                     if credentials.password == success.first?.password {
+                        self.userDefaultsService.saveUsername(credentials.username)
+                        self.databaseCoordinator.update(
+                            UserCredentialsRealmModel.self,
+                            predicate: predicate,
+                            keyedValues: ["isAuth": true]
+                        ) { result in
+                            switch result {
+                            case .success:
+                                ()                                
+                            case .failure(let failure):
+                                print(failure.localizedDescription)
+                            }
+                        }
                         self.goToMainScreen()
                         self.resetTextFields()
                     } else {

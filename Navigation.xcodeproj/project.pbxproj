@@ -15,6 +15,7 @@
 		C73FEBD9291C407A00EC9709 /* RealmCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73FEBD8291C407A00EC9709 /* RealmCoordinator.swift */; };
 		C73FEBDC291C449100EC9709 /* UserCredentialsRealmModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73FEBDB291C449100EC9709 /* UserCredentialsRealmModel.swift */; };
 		C73FEBE02922BF8B00EC9709 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73FEBDF2922BF8B00EC9709 /* Credentials.swift */; };
+		C73FEBE22928D08B00EC9709 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C73FEBE12928D08B00EC9709 /* AppCoordinator.swift */; };
 		C759180327F39CB2004DB176 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C759180227F39CB2004DB176 /* LogInViewController.swift */; };
 		C759180527F4E5CC004DB176 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C759180427F4E5CC004DB176 /* UITextField+Extension.swift */; };
 		C759180927F6F623004DB176 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C759180827F6F623004DB176 /* UIImage+Extension.swift */; };
@@ -28,6 +29,7 @@
 		C7A62C2027D24CE4000CF42B /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A62C1F27D24CE4000CF42B /* MainTabBarController.swift */; };
 		C7A62C2327D6139A000CF42B /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A62C2227D6139A000CF42B /* InfoViewController.swift */; };
 		C7A62C2527D6890E000CF42B /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A62C2427D6890E000CF42B /* Post.swift */; };
+		C7B0E0C82928D91400515232 /* UserDefaultsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B0E0C72928D91400515232 /* UserDefaultsService.swift */; };
 		C7B9649727DF4958003AD7C1 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B9649627DF4958003AD7C1 /* ProfileHeaderView.swift */; };
 		C7D593D328E05BA60061E079 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D593D228E05BA60061E079 /* String+Extension.swift */; };
 		C7D593D728E06E540061E079 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D593D628E06E540061E079 /* UIViewController+Extension.swift */; };
@@ -55,6 +57,7 @@
 		C73FEBD8291C407A00EC9709 /* RealmCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCoordinator.swift; sourceTree = "<group>"; };
 		C73FEBDB291C449100EC9709 /* UserCredentialsRealmModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCredentialsRealmModel.swift; sourceTree = "<group>"; };
 		C73FEBDF2922BF8B00EC9709 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		C73FEBE12928D08B00EC9709 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		C759180227F39CB2004DB176 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		C759180427F4E5CC004DB176 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		C759180827F6F623004DB176 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+Extension.swift"; path = "Navigation/Extension/UIImage+Extension.swift"; sourceTree = SOURCE_ROOT; };
@@ -70,6 +73,7 @@
 		C7A62C1F27D24CE4000CF42B /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		C7A62C2227D6139A000CF42B /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		C7A62C2427D6890E000CF42B /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		C7B0E0C72928D91400515232 /* UserDefaultsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsService.swift; sourceTree = "<group>"; };
 		C7B9649627DF4958003AD7C1 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		C7D593D228E05BA60061E079 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C7D593D628E06E540061E079 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -247,6 +251,7 @@
 		C7D593CF28E057EB0061E079 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				C7B0E0C72928D91400515232 /* UserDefaultsService.swift */,
 				C796477B28E9B0CD006A2BDE /* Network service */,
 			);
 			path = Service;
@@ -255,6 +260,7 @@
 		C7D593DF28E238CF0061E079 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				C73FEBE12928D08B00EC9709 /* AppCoordinator.swift */,
 				C7D593E028E238E40061E079 /* AppError.swift */,
 				C7FF625B28E8D4D100FB6D69 /* AppConfiguration.swift */,
 			);
@@ -430,6 +436,7 @@
 			files = (
 				C759180327F39CB2004DB176 /* LogInViewController.swift in Sources */,
 				C796477E28E9B0FE006A2BDE /* NetworkModel.swift in Sources */,
+				C73FEBE22928D08B00EC9709 /* AppCoordinator.swift in Sources */,
 				C7A62C1E27D24B39000CF42B /* PostViewController.swift in Sources */,
 				C73FEBE02922BF8B00EC9709 /* Credentials.swift in Sources */,
 				C7A62C1C27D24B1C000CF42B /* ProfileViewController.swift in Sources */,
@@ -454,6 +461,7 @@
 				C73FEBD6291C402C00EC9709 /* Storable.swift in Sources */,
 				C7A62C2527D6890E000CF42B /* Post.swift in Sources */,
 				C7A62C0627D244A0000CF42B /* AppDelegate.swift in Sources */,
+				C7B0E0C82928D91400515232 /* UserDefaultsService.swift in Sources */,
 				C7E32E3E280ABAF4007D4481 /* UIView+Extension.swift in Sources */,
 				C7B9649727DF4958003AD7C1 /* ProfileHeaderView.swift in Sources */,
 				C7FA3335281EF73B00F708C2 /* PhotosCollectionViewCell.swift in Sources */,

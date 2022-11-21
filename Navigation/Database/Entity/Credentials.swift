@@ -13,7 +13,7 @@ struct Credentials {
     var keyedValues: [String: Any] {
         return [
             "username": self.username,
-            "password": self.password,
+            "password": self.password
         ]
     }
  }
