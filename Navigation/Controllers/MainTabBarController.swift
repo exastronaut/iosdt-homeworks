@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainTabBarController: UITabBarController {
+final class MainTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,21 +18,28 @@ class MainTabBarController: UITabBarController {
         let feedViewController = createNavigationController(
             viewController: FeedViewController(model: FeedModel()),
             itemName: "Feed",
-            itemImage: "house"
+            itemImage: "house",
+            tag: 0
         )
-        let logInViewController = createNavigationController(
-            viewController: LogInViewController(),
+        let profileViewController = createNavigationController(
+            viewController: ProfileViewController(),
             itemName: "Profile",
-            itemImage: "person"
+            itemImage: "person",
+            tag: 1
         )
 
-        viewControllers = [feedViewController, logInViewController]
+        viewControllers = [feedViewController, profileViewController]
     }
 
-    private func createNavigationController(viewController: UIViewController, itemName: String, itemImage: String) -> UINavigationController {
-        let item = UITabBarItem(title: itemName,
-                                image: UIImage(systemName: itemImage)?.withAlignmentRectInsets(.init(top: 10, left: 0, bottom: 0, right: 0)),
-                                tag: 0)
+    private func createNavigationController(viewController: UIViewController,
+                                            itemName: String,
+                                            itemImage: String,
+                                            tag: Int) -> UINavigationController {
+        let item = UITabBarItem(
+            title: itemName,
+            image: UIImage(systemName: itemImage)?.withAlignmentRectInsets(.init(top: 10, left: 0, bottom: 0, right: 0)),
+            tag: tag
+        )
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.tabBarItem = item
 
