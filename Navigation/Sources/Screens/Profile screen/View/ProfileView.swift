@@ -49,11 +49,13 @@ final class ProfileView: UIView {
 extension ProfileView: ProfileHeaderViewDelegate {
     func didTapAvatar() {
         tableView.isScrollEnabled = false
+        tableView.allowsSelection = false
         tableManager.delegate?.didTapAvatar()
     }
 
     func didTapCloseButton() {
         tableView.isScrollEnabled = true
+        tableView.allowsSelection = true
         tableManager.delegate?.didTapCloseButton()
     }
 }
