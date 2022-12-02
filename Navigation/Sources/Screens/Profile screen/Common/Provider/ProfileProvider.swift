@@ -6,7 +6,7 @@
 //
 
 protocol ProvidesProfile {
-    func getPostModels() -> [ProfilePostModel]
+    func getPostModels() -> [PostModel]
 }
 
 final class ProfileProvider {
@@ -18,7 +18,7 @@ final class ProfileProvider {
 }
 
 extension ProfileProvider: ProvidesProfile {
-    func getPostModels() -> [ProfilePostModel] {
+    func getPostModels() -> [PostModel] {
         dataStore.postModels
     }
 }

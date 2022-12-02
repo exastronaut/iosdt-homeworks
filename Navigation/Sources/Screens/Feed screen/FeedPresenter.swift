@@ -23,3 +23,8 @@ extension FeedPresenter: FeedScreenOutput {
         moduleOutput?.didTapButton()
     }
 }
+
+extension FeedPresenter {
+    typealias Response = [PostModel]
+    typealias ViewModel = [PostModel]
+}

@@ -50,9 +50,9 @@ final class ProfileTableManager: NSObject, ManagesProfileTable {
             return photosCell
         } else {
             let postCell = tableView.dequeueReusableCell(
-                withIdentifier: ProfilePostTableViewCell.identifier,
+                withIdentifier: PostTableViewCell.identifier,
                 for: indexPath
-            ) as? ProfilePostTableViewCell
+            ) as? PostTableViewCell
 
             postCell?.setupCell(model: post)
             return postCell ?? UITableViewCell()

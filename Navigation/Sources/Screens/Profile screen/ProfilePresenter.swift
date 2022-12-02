@@ -37,6 +37,6 @@ extension ProfilePresenter: ProfileScreenOutput {
 }
 
 extension ProfilePresenter {
-    typealias Response = [ProfilePostModel]
-    typealias ViewModel = [[ProfilePostModel]]
+    typealias Response = [PostModel]
+    typealias ViewModel = [[PostModel]]
 }

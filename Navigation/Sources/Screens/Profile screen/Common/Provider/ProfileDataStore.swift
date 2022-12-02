@@ -6,16 +6,16 @@
 //
 
 protocol StoresProfile: AnyObject {
-    var postModels: [ProfilePostModel] { get set }
+    var postModels: [PostModel] { get set }
 }
 
 final class ProfileDataStore: StoresProfile {
-    var postModels: [ProfilePostModel] = Constants.models
+    var postModels: [PostModel] = Constants.models
 }
 
 private extension ProfileDataStore {
     enum Constants {
-        static let models: [ProfilePostModel] = [
+        static let models: [PostModel] = [
             .init(
                 author: "Memus",
                 description: "infinite SOCIAL CREDIT hack 100% working FREE by Zhong Xina",

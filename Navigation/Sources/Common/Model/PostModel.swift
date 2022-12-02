@@ -1,11 +1,11 @@
 //
-//  ProfilePostModel.swift
+//  PostModel.swift
 //  Navigation
 //
 //  Created by Артем Свиридов on 15.04.2022.
 //
 
-struct ProfilePostModel {
+struct PostModel {
     var author: String
     var description: String
     var image: String

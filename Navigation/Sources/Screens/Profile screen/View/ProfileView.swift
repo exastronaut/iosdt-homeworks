@@ -22,7 +22,7 @@ final class ProfileView: UIView {
         table.dataSource = tableManager
         table.separatorStyle = .none
         table.register(PhotosTableViewCell.self, forCellReuseIdentifier: PhotosTableViewCell.identifier)
-        table.register(ProfilePostTableViewCell.self, forCellReuseIdentifier: ProfilePostTableViewCell.identifier)
+        table.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
         return table
     }()
 
