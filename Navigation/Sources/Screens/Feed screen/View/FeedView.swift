@@ -20,7 +20,6 @@ final class FeedView: UIView {
         table.showsVerticalScrollIndicator = false
         table.delegate = tableManager
         table.dataSource = tableManager
-        table.separatorStyle = .none
         table.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
         return table
     }()
@@ -56,7 +55,6 @@ extension FeedView: DisplaysFeedView {
 // MARK: - Private functions
 
 private extension FeedView {
-
     func addSubviews() {
         addSubview(tableView)
     }

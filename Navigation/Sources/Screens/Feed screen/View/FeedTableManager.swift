@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FeedTableManagerDelegate: AnyObject {
-    func didTapPostCell()
+    func didTapPostCell(_ index: Int)
 }
 
 protocol ManagesFeedTable: UITableViewDataSource, UITableViewDelegate {
@@ -43,7 +43,18 @@ final class FeedTableManager: NSObject, ManagesFeedTable {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? PostTableViewCell
+        let doubleTap = DoubleTapGesture(target: self, action: #selector(doubleTapped))
+        doubleTap.numberOfTapsRequired = 2
+        doubleTap.indexCell = indexPath.row
+        cell?.addGestureRecognizer(doubleTap)
         tableView.deselectRow(at: indexPath, animated: true)
     }
+
+    @objc
+    func doubleTapped(_ sender: DoubleTapGesture) {
+        delegate?.didTapPostCell(sender.indexCell)
+    }
 }
+
 

@@ -8,8 +8,8 @@
 import UIKit
 
 class PhotosTableViewCell: UITableViewCell {
-
     //MARK: - Properties
+    
     private let title: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false

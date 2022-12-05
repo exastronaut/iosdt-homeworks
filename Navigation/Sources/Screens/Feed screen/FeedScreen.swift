@@ -9,17 +9,7 @@ import UIKit
 
 final class FeedScreen: UIViewController {
     var output: FeedScreenOutput!
-
     private lazy var contentView: FeedView = .init(delegate: self)
-    private lazy var logOutButton: UIBarButtonItem = {
-        let barButton = UIBarButtonItem(
-            image: UIImage(systemName: "door.right.hand.open"),
-            style: .done,
-            target: self,
-            action: #selector(logOutAction)
-        )
-        return barButton
-    }()
 
     override func loadView() {
         super.loadView()
@@ -31,26 +21,27 @@ final class FeedScreen: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.leftBarButtonItem = logOutButton
+        output.loadData()
     }
 }
 
 extension FeedScreen: FeedTableManagerDelegate {
-    func didTapPostCell() { print("tap") }
+    func didTapPostCell(_ index: Int) {
+        output.didTapCell(index)
+    }
 }
 
 // MARK: - FeedScreenInput
 
-extension FeedScreen: FeedScreenInput { }
+extension FeedScreen: FeedScreenInput {
+    func displayData(_ viewModel: FeedPresenter.ViewModel) {
+        contentView.configure(viewModel)
+    }
+}
 
 // MARK: - Private functions
 
-private extension FeedScreen {
-    @objc
-    func logOutAction() {
-        output.didTapButton()
-    }
-}
+private extension FeedScreen { }
 
 // MARK: - Constants
 

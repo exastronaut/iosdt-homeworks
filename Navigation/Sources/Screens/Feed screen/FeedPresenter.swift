@@ -7,11 +7,14 @@
 
 final class FeedPresenter {
     private unowned let view: FeedScreenInput
+    private let interactor: FeedInteractorProtocol
     private weak var moduleOutput: FeedModuleOutput?
 
     init(view: FeedScreenInput,
+         interactor: FeedInteractorProtocol,
          moduleOutput: FeedModuleOutput?) {
         self.view = view
+        self.interactor = interactor
         self.moduleOutput = moduleOutput
     }
 }
@@ -19,8 +22,13 @@ final class FeedPresenter {
 // MARK: - FeedScreenOutput
 
 extension FeedPresenter: FeedScreenOutput {
-    func didTapButton() {
-        moduleOutput?.didTapButton()
+    func didTapCell(_ index: Int) { }
+
+    func loadData() {
+        let response = interactor.getData()
+        var viewModel = ViewModel()
+        viewModel.append(contentsOf: response)
+        view.displayData(viewModel)
     }
 }
 

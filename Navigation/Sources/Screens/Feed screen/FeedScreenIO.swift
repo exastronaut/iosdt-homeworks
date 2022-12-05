@@ -6,7 +6,10 @@
 //
 
 protocol FeedScreenOutput: AnyObject {
-    func didTapButton()
+    func loadData()
+    func didTapCell(_ index: Int)
 }
 
-protocol FeedScreenInput: AnyObject { }
+protocol FeedScreenInput: AnyObject {
+    func displayData(_ viewModel: FeedPresenter.ViewModel)
+}

@@ -37,10 +37,6 @@ final class ProfileTableManager: NSObject, ManagesProfileTable {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let post = posts[safe: 0]?[safe: indexPath.row] else {
-            return UITableViewCell()
-        }
-
         if indexPath.section == 0 {
             let photosCell = tableView.dequeueReusableCell(
                 withIdentifier: PhotosTableViewCell.identifier,
@@ -54,8 +50,14 @@ final class ProfileTableManager: NSObject, ManagesProfileTable {
                 for: indexPath
             ) as? PostTableViewCell
 
-            postCell?.setupCell(model: post)
-            return postCell ?? UITableViewCell()
+            guard let post = posts[safe: 0]?[safe: indexPath.row],
+                  let postCell = postCell
+            else {
+                return UITableViewCell()
+            }
+
+            postCell.setupCell(model: post)
+            return postCell
         }
     }
 
