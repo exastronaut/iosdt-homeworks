@@ -21,21 +21,21 @@ enum DatabaseError: Error {
 }
 
 protocol DatabaseCoordinatable {
-    typealias ResultHandler = (Result<Any, DatabaseError>) -> Void
+    typealias ResultHandler<T> = (Result<[T], DatabaseError>) -> Void
 
     /// Создание объекта заданного типа.
-    func create<T: Storable>(_ model: T.Type, keyedValues: [[String: Any]], completion: @escaping ResultHandler)
+    func create<T: Storable>(_ model: T.Type, keyedValues: [[String: Any]], completion: @escaping ResultHandler<T>)
     /// Обновление объекта заданного типа с помощью предиката.
     func update<T: Storable>(_ model: T.Type,
                              predicate: NSPredicate?,
                              keyedValues: [String: Any],
-                             completion: @escaping ResultHandler)
+                             completion: @escaping ResultHandler<T>)
     /// Удаление объектов заданного типа с помощью предиката.
-    func delete<T: Storable>(_ model: T.Type, predicate: NSPredicate?, completion: @escaping ResultHandler)
+    func delete<T: Storable>(_ model: T.Type, predicate: NSPredicate?, completion: @escaping ResultHandler<T>)
     /// Удаление всех объектов заданного типа.
-    func deleteAll<T: Storable>(_ model: T.Type, completion: @escaping ResultHandler)
+    func deleteAll<T: Storable>(_ model: T.Type, completion: @escaping ResultHandler<T>)
     /// Получение объектов заданного типа с помощью предиката.
-    func fetch<T: Storable>(_ model: T.Type, predicate: NSPredicate?, completion: @escaping ResultHandler)
+    func fetch<T: Storable>(_ model: T.Type, predicate: NSPredicate?, completion: @escaping ResultHandler<T>)
     /// Получение объектов заданного типа.
-    func fetchAll<T: Storable>(_ model: T.Type, completion: @escaping ResultHandler)
+    func fetchAll<T: Storable>(_ model: T.Type, completion: @escaping ResultHandler<T>)
 }

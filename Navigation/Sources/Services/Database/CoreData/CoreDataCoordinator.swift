@@ -97,7 +97,7 @@ final class CoreDataCoordinator {
 extension CoreDataCoordinator: DatabaseCoordinatable {
     func create<T>(_ model: T.Type,
                    keyedValues: [[String : Any]],
-                   completion: @escaping ResultHandler) where T : Storable {
+                   completion: @escaping ResultHandler<T>) where T : Storable {
         self.mainContext.perform { [weak self] in
             guard let self = self else { return }
 
@@ -141,7 +141,7 @@ extension CoreDataCoordinator: DatabaseCoordinatable {
     func update<T>(_ model: T.Type,
                    predicate: NSPredicate?,
                    keyedValues: [String : Any],
-                   completion: @escaping ResultHandler) where T : Storable {
+                   completion: @escaping ResultHandler<T>) where T : Storable {
         self.fetch(model, predicate: predicate) { [weak self] result in
             guard let self = self else { return }
 
@@ -180,7 +180,7 @@ extension CoreDataCoordinator: DatabaseCoordinatable {
 
     func delete<T>(_ model: T.Type,
                    predicate: NSPredicate?,
-                   completion: @escaping ResultHandler) where T : Storable {
+                   completion: @escaping ResultHandler<T>) where T : Storable {
         self.fetch(model, predicate: predicate) { [weak self] result in
             guard let self = self else { return }
 
@@ -217,13 +217,13 @@ extension CoreDataCoordinator: DatabaseCoordinatable {
         }
     }
 
-    func deleteAll<T>(_ model: T.Type, completion: @escaping ResultHandler) where T : Storable {
+    func deleteAll<T>(_ model: T.Type, completion: @escaping ResultHandler<T>) where T : Storable {
         self.delete(model, predicate: nil, completion: completion)
     }
 
     func fetch<T>(_ model: T.Type,
                   predicate: NSPredicate?,
-                  completion: @escaping ResultHandler) where T : Storable {
+                  completion: @escaping ResultHandler<T>) where T : Storable {
         guard let model = model as? NSManagedObject.Type else {
             completion(.failure(.wrongModel))
             return
@@ -244,7 +244,7 @@ extension CoreDataCoordinator: DatabaseCoordinatable {
         }
     }
 
-    func fetchAll<T>(_ model: T.Type, completion: @escaping ResultHandler) where T : Storable {
+    func fetchAll<T>(_ model: T.Type, completion: @escaping ResultHandler<T>) where T : Storable {
         self.fetch(model, predicate: nil, completion: completion)
     }
 }

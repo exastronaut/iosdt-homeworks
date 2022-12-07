@@ -15,7 +15,8 @@
 		C7024BB8293DCE0D0032AF77 /* FeedProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7024BB7293DCE0D0032AF77 /* FeedProvider.swift */; };
 		C7024BBA293DCE340032AF77 /* FeedDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7024BB9293DCE340032AF77 /* FeedDataStore.swift */; };
 		C7024BBC293DCE4F0032AF77 /* FeedInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7024BBB293DCE4F0032AF77 /* FeedInteractor.swift */; };
-		C7024BC0293E381A0032AF77 /* DoubleTapGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7024BBF293E381A0032AF77 /* DoubleTapGesture.swift */; };
+		C7024BC0293E381A0032AF77 /* DoubleTapGestureForPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7024BBF293E381A0032AF77 /* DoubleTapGestureForPostCell.swift */; };
+		C7024BC2293FBB430032AF77 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7024BC1293FBB430032AF77 /* Module.swift */; };
 		C759180327F39CB2004DB176 /* LogInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C759180227F39CB2004DB176 /* LogInScreen.swift */; };
 		C759180527F4E5CC004DB176 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C759180427F4E5CC004DB176 /* UITextField+Extension.swift */; };
 		C7721E272935E70D00A0B39E /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7721E262935E70D00A0B39E /* FeedView.swift */; };
@@ -82,7 +83,8 @@
 		C7024BB7293DCE0D0032AF77 /* FeedProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedProvider.swift; sourceTree = "<group>"; };
 		C7024BB9293DCE340032AF77 /* FeedDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDataStore.swift; sourceTree = "<group>"; };
 		C7024BBB293DCE4F0032AF77 /* FeedInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedInteractor.swift; sourceTree = "<group>"; };
-		C7024BBF293E381A0032AF77 /* DoubleTapGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapGesture.swift; sourceTree = "<group>"; };
+		C7024BBF293E381A0032AF77 /* DoubleTapGestureForPostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleTapGestureForPostCell.swift; sourceTree = "<group>"; };
+		C7024BC1293FBB430032AF77 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		C759180227F39CB2004DB176 /* LogInScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInScreen.swift; sourceTree = "<group>"; };
 		C759180427F4E5CC004DB176 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		C7721E262935E70D00A0B39E /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
@@ -390,7 +392,8 @@
 				C7D593E028E238E40061E079 /* AppError.swift */,
 				C7DC3A0E293395D1001F7289 /* Coordinator.swift */,
 				C7DC3A20293508F7001F7289 /* TabBarPage.swift */,
-				C7024BBF293E381A0032AF77 /* DoubleTapGesture.swift */,
+				C7024BBF293E381A0032AF77 /* DoubleTapGestureForPostCell.swift */,
+				C7024BC1293FBB430032AF77 /* Module.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				C7721E34293600E200A0B39E /* FeedCoordinator.swift in Sources */,
 				C7024BBA293DCE340032AF77 /* FeedDataStore.swift in Sources */,
 				C7DC3A1B29349DAC001F7289 /* MainTabBarCoordinator.swift in Sources */,
+				C7024BC2293FBB430032AF77 /* Module.swift in Sources */,
 				C7A62C1A27D24B03000CF42B /* FeedScreen.swift in Sources */,
 				C7721E2A2935EC1100A0B39E /* LogInView.swift in Sources */,
 				C7E32E3C280AA8F0007D4481 /* PostTableViewCell.swift in Sources */,
@@ -586,7 +590,7 @@
 				C7721E4B293740CC00A0B39E /* PhotosScreenIO.swift in Sources */,
 				C7DC3A2529352FFC001F7289 /* LogInModuleIO.swift in Sources */,
 				C7721E4D2937421000A0B39E /* PhotosCoordinator.swift in Sources */,
-				C7024BC0293E381A0032AF77 /* DoubleTapGesture.swift in Sources */,
+				C7024BC0293E381A0032AF77 /* DoubleTapGestureForPostCell.swift in Sources */,
 				C7D593D328E05BA60061E079 /* String+Extension.swift in Sources */,
 				C7024BB02939D3A80032AF77 /* FeedTableManager.swift in Sources */,
 				C7DC3A21293508F7001F7289 /* TabBarPage.swift in Sources */,

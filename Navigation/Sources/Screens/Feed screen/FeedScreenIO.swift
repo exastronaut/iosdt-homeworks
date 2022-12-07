@@ -7,7 +7,7 @@
 
 protocol FeedScreenOutput: AnyObject {
     func loadData()
-    func didTapCell(_ index: Int)
+    func didTapCell(_ post: PostModel?)
 }
 
 protocol FeedScreenInput: AnyObject {

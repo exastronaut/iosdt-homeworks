@@ -7,6 +7,6 @@
 
 import UIKit
 
-final class DoubleTapGesture: UITapGestureRecognizer {
-    var indexCell: Int = 0
+final class DoubleTapGestureForPostCell: UITapGestureRecognizer {
+    var post: PostModel?
 }

@@ -6,5 +6,6 @@
         <attribute name="imageName" optional="YES" attributeType="String"/>
         <attribute name="numberOfLikes" optional="YES" attributeType="String"/>
         <attribute name="numberOfViews" optional="YES" attributeType="String"/>
+        <attribute name="uid" optional="YES" attributeType="String"/>
     </entity>
 </model>

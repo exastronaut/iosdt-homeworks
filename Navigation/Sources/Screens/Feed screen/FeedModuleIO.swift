@@ -5,4 +5,6 @@
 //  Created by Artem Sviridov on 28.11.2022.
 //
 
-protocol FeedModuleOutput: AnyObject { }
+protocol FeedModuleOutput: AnyObject {
+    func didTapCell(_ post: PostModel)
+}

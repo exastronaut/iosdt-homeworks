@@ -71,6 +71,10 @@ private extension MainTabBarCoordinator {
 // MARK: - FeedCoordinatorOutput
 
 extension MainTabBarCoordinator: FeedCoordinatorOutput {
+    func didTapCell(with post: PostModel) {
+        profileCoordinator?.update(with: post)
+    }
+
     func didTapButton() {
         output?.didFinishMain()
     }

@@ -17,32 +17,36 @@ private extension FeedDataStore {
     enum Constants {
         static let models: [PostModel] = [
             .init(
+                uid: "1",
                 author: "Memus",
-                description: "infinite SOCIAL CREDIT hack 100% working FREE by Zhong Xina",
-                image: "post1",
-                likes: 34875,
-                views: 742358
+                content: "infinite SOCIAL CREDIT hack 100% working FREE by Zhong Xina",
+                imageName: "post1",
+                numberOfLikes: "34875",
+                numberOfViews: "742358"
             ),
             .init(
+                uid: "2",
                 author: "Zelgius5631E",
-                description: "Super Idol Full Song",
-                image: "post2",
-                likes: 290,
-                views: 12232
+                content: "Super Idol Full Song",
+                imageName: "post2",
+                numberOfLikes: "290",
+                numberOfViews: "12232"
             ),
             .init(
+                uid: "3",
                 author: "Zhong Xina",
-                description: "I'm speaking chinese and eating ice cream",
-                image: "post3",
-                likes: 9000,
-                views: 9000
+                content: "I'm speaking chinese and eating ice cream",
+                imageName: "post3",
+                numberOfLikes: "9000",
+                numberOfViews: "9000"
             ),
             .init(
+                uid: "4",
                 author: "Li Han Myeon",
-                description: "剪梅 (Yi Jian Mei) - 費玉清 (Fei Yu Qing)",
-                image: "post4",
-                likes: 54,
-                views: 3331
+                content: "剪梅 (Yi Jian Mei) - 費玉清 (Fei Yu Qing)",
+                imageName: "post4",
+                numberOfLikes: "54",
+                numberOfViews: "3331"
             )
         ]
     }

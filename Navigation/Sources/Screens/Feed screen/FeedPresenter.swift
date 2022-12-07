@@ -5,6 +5,8 @@
 //  Created by Artem Sviridov on 28.11.2022.
 //
 
+import Foundation
+
 final class FeedPresenter {
     private unowned let view: FeedScreenInput
     private let interactor: FeedInteractorProtocol
@@ -22,7 +24,11 @@ final class FeedPresenter {
 // MARK: - FeedScreenOutput
 
 extension FeedPresenter: FeedScreenOutput {
-    func didTapCell(_ index: Int) { }
+    func didTapCell(_ post: PostModel?) {
+        guard let selectedPost = post else { return }
+
+        moduleOutput?.didTapCell(selectedPost)
+    }
 
     func loadData() {
         let response = interactor.getData()

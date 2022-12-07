@@ -212,7 +212,6 @@ extension ProfileHeaderView {
             self.layoutIfNeeded()
             self.avatarImageView.layer.zPosition = 1
             self.backView.alpha = 0.70
-//
         } completion: { _ in
             UIView.animate(withDuration: 0.3) {
                 self.closeButton.alpha = 1
@@ -235,7 +234,6 @@ extension ProfileHeaderView {
                 self.topAvatarImageView.constant = 16
                 self.backView.alpha = 0
                 self.layoutIfNeeded()
-//                self.tableView.isScrollEnabled = true
             }
         }
     }

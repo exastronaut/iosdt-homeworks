@@ -9,6 +9,7 @@ import UIKit
 
 protocol FeedCoordinatorOutput: AnyObject {
     func didTapButton()
+    func didTapCell(with post: PostModel)
 }
 
 final class FeedCoordinator: Coordinator {
@@ -29,6 +30,10 @@ final class FeedCoordinator: Coordinator {
 // MARK: - LogInModuleOutput
 
 extension FeedCoordinator: FeedModuleOutput {
+    func didTapCell(_ post: PostModel) {
+        output?.didTapCell(with: post)
+    }
+
     func didTapButton() {
         output?.didTapButton()
     }

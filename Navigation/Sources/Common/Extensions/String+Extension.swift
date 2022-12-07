@@ -9,6 +9,7 @@ import Foundation
 
 extension String {
     // MARK: - Constants
+
     static let emptyString = ""
 
     // MARK: - Methods

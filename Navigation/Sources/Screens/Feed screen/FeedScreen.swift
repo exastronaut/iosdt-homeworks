@@ -26,8 +26,8 @@ final class FeedScreen: UIViewController {
 }
 
 extension FeedScreen: FeedTableManagerDelegate {
-    func didTapPostCell(_ index: Int) {
-        output.didTapCell(index)
+    func didTapPostCell(_ post: PostModel?) {
+        output.didTapCell(post)
     }
 }
 

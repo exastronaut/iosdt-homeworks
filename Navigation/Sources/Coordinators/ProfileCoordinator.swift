@@ -13,6 +13,7 @@ final class ProfileCoordinator: Coordinator {
     private let presenter: UINavigationController
     private weak var output: ProfileCoordinatorOutput?
     private var photosCoordinator: PhotosCoordinator?
+    private weak var profileModuleInput: ProfileModuleInput?
 
     init(presenter: UINavigationController, output: ProfileCoordinatorOutput?) {
         self.presenter = presenter
@@ -20,12 +21,17 @@ final class ProfileCoordinator: Coordinator {
     }
 
     func start() {
-        let screen = ProfileScreenModuleAssembly.buildModule(moduleOutput: self)
-        presenter.pushViewController(screen, animated: true)
+        let module = ProfileScreenModuleAssembly.buildModule(moduleOutput: self)
+        profileModuleInput = module.moduleInput
+        presenter.pushViewController(module.screen, animated: true)
+    }
+
+    func update(with post: PostModel) {
+        profileModuleInput?.update(with: post)
     }
 }
 
-// MARK: - LogInModuleOutput
+// MARK: - ProfileModuleOutput
 
 extension ProfileCoordinator: ProfileModuleOutput {
     func didTapPhotosCell() {

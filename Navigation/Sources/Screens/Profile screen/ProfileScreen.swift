@@ -29,12 +29,16 @@ final class ProfileScreen: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         navigationController?.navigationBar.isHidden = true
     }
 }
 
 extension ProfileScreen: ProfileTableManagerDelegate {
+    func removePostFromDatabase(_ post: PostModel?) {
+        output.removePostFromDatabase(post)
+    }
+
     func didTapPhotosCell() {
         output.didTapPhotosCell()
     }
@@ -51,6 +55,10 @@ extension ProfileScreen: ProfileTableManagerDelegate {
 //MARK: - ProfileScreenInput
 
 extension ProfileScreen: ProfileScreenInput {
+    func displayErrorAlert(_ message: String?) {
+        showAlert(with: message)
+    }
+
     func displayData(_ viewModel: ProfilePresenter.ViewModel) {
         contentView.configure(viewModel)
     }
