@@ -7,29 +7,33 @@
 
 import UIKit
 
-protocol FeedViewDelegate: AnyObject {
-    func didTapButton()
+protocol DisplaysFeedView: UIView {
+    func configure(_ viewModel: FeedPresenter.ViewModel)
 }
 
 final class FeedView: UIView {
     // MARK: - Properties
 
-    weak var delegate: FeedViewDelegate?
-
-    private lazy var button: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(Constants.title, for: .normal)
-        button.setTitleColor(.systemBlue, for: .normal)
-        button.addTarget(nil, action: #selector(buttonAction), for: .touchUpInside)
-        return button
+    private lazy var tableView: UITableView = {
+        let table = UITableView(frame: .zero, style: .grouped)
+        table.translatesAutoresizingMaskIntoConstraints = false
+        table.showsVerticalScrollIndicator = false
+        table.delegate = tableManager
+        table.dataSource = tableManager
+        table.register(PostTableViewCell.self, forCellReuseIdentifier: PostTableViewCell.identifier)
+        return table
     }()
+
+    private let tableManager: ManagesFeedTable
 
     // MARK: - Lifecycle
 
-    init() {
+    init(tableManager: ManagesFeedTable = FeedTableManager(),
+         delegate: FeedTableManagerDelegate) {
+        self.tableManager = tableManager
         super.init(frame: .zero)
 
+        tableManager.delegate = delegate
         addSubviews()
         makeConstraints()
     }
@@ -39,26 +43,28 @@ final class FeedView: UIView {
     }
 }
 
-// MARK: - Private functions + Constants
+// MARK: - DisplaysFeedView
+
+extension FeedView: DisplaysFeedView {
+    func configure(_ viewModel: FeedPresenter.ViewModel) {
+        tableManager.posts = viewModel
+        tableView.reloadData()
+    }
+}
+
+// MARK: - Private functions
 
 private extension FeedView {
-    @objc
-    func buttonAction() {
-        delegate?.didTapButton()
-    }
-
     func addSubviews() {
-        addSubview(button)
+        addSubview(tableView)
     }
 
     func makeConstraints() {
         NSLayoutConstraint.activate([
-            button.centerXAnchor.constraint(equalTo: centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: centerYAnchor)
+            tableView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-
-    enum Constants {
-        static let title = "Tap"
     }
 }

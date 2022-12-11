@@ -9,12 +9,7 @@ import UIKit
 
 final class FeedScreen: UIViewController {
     var output: FeedScreenOutput!
-
-    private lazy var contentView: FeedView = {
-        let view = FeedView()
-        view.delegate = self
-        return view
-    }()
+    private lazy var contentView: FeedView = .init(delegate: self)
 
     override func loadView() {
         super.loadView()
@@ -22,19 +17,27 @@ final class FeedScreen: UIViewController {
         title = Constants.title
         view = contentView
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        output.loadData()
+    }
 }
 
-// MARK: - FeedViewDelegate
-
-extension FeedScreen: FeedViewDelegate {
-    func didTapButton() {
-        output.didTapButton()
+extension FeedScreen: FeedTableManagerDelegate {
+    func didTapPostCell(_ post: PostModel?) {
+        output.didTapCell(post)
     }
 }
 
 // MARK: - FeedScreenInput
 
-extension FeedScreen: FeedScreenInput { }
+extension FeedScreen: FeedScreenInput {
+    func displayData(_ viewModel: FeedPresenter.ViewModel) {
+        contentView.configure(viewModel)
+    }
+}
 
 // MARK: - Private functions
 

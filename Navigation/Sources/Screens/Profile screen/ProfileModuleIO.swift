@@ -8,3 +8,7 @@
 protocol ProfileModuleOutput: AnyObject {
     func didTapPhotosCell()
 }
+
+protocol ProfileModuleInput: AnyObject {
+    func update(with post: PostModel)
+}

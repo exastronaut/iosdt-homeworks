@@ -6,7 +6,7 @@
 //
 
 protocol ProvidesProfile {
-    func getPostModels() -> [ProfilePostModel]
+    func getCoreDataDatabase() -> DatabaseCoordinatable
 }
 
 final class ProfileProvider {
@@ -18,7 +18,7 @@ final class ProfileProvider {
 }
 
 extension ProfileProvider: ProvidesProfile {
-    func getPostModels() -> [ProfilePostModel] {
-        dataStore.postModels
+    func getCoreDataDatabase() -> DatabaseCoordinatable {
+        dataStore.coreDataCoordinator
     }
 }

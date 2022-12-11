@@ -8,7 +8,8 @@
 import UIKit
 
 final class ProfileScreenModuleAssembly {
-    static func buildModule(moduleOutput: ProfileModuleOutput) -> UIViewController {
+    static var presenter: ProfilePresenter!
+    static func buildModule(moduleOutput: ProfileModuleOutput) -> Module<ProfileModuleInput> {
         let view = ProfileScreen()
         let dataStore = ProfileDataStore()
         let provider = ProfileProvider(dataStore: dataStore)
@@ -18,8 +19,10 @@ final class ProfileScreenModuleAssembly {
             interactor: interactor,
             moduleOutput: moduleOutput
         )
+        self.presenter = presenter
+
         view.output = presenter
 
-        return view
+        return Module(view, presenter)
     }
 }

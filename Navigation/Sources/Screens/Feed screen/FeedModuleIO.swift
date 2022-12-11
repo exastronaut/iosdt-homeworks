@@ -6,5 +6,5 @@
 //
 
 protocol FeedModuleOutput: AnyObject {
-    func didTapButton()
+    func didTapCell(_ post: PostModel)
 }

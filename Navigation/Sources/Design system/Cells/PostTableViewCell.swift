@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfilePostTableViewCell: UITableViewCell {
+class PostTableViewCell: UITableViewCell {
     
     //MARK: - Properties
     private let author: UILabel = {
@@ -68,12 +68,12 @@ class ProfilePostTableViewCell: UITableViewCell {
         contentView.backgroundColor = .white
     }
 
-    func setupCell(model: ProfilePostModel) {
+    func setupCell(model: PostModel) {
         author.text = model.author
-        image.image = UIImage(named: model.image)
-        descriptionText.text = model.description
-        likes.text = "Likes: \(model.likes)"
-        views.text = "Views: \(model.views)"
+        image.image = UIImage(named: model.imageName)
+        descriptionText.text = model.content
+        likes.text = "Likes: \(model.numberOfLikes)"
+        views.text = "Views: \(model.numberOfViews)"
     }
 
     private func layout() {

@@ -11,6 +11,7 @@ protocol ProfileTableManagerDelegate: AnyObject {
     func didTapPhotosCell()
     func didTapAvatar()
     func didTapCloseButton()
+    func removePostFromDatabase(_ post: PostModel?)
 }
 
 protocol ManagesProfileTable: UITableViewDataSource, UITableViewDelegate {
@@ -32,15 +33,11 @@ final class ProfileTableManager: NSObject, ManagesProfileTable {
         if section == 0 {
             return 1
         } else {
-            return posts[safe: 0]?.count ?? 0
+            return posts.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let post = posts[safe: 0]?[safe: indexPath.row] else {
-            return UITableViewCell()
-        }
-
         if indexPath.section == 0 {
             let photosCell = tableView.dequeueReusableCell(
                 withIdentifier: PhotosTableViewCell.identifier,
@@ -50,12 +47,18 @@ final class ProfileTableManager: NSObject, ManagesProfileTable {
             return photosCell
         } else {
             let postCell = tableView.dequeueReusableCell(
-                withIdentifier: ProfilePostTableViewCell.identifier,
+                withIdentifier: PostTableViewCell.identifier,
                 for: indexPath
-            ) as? ProfilePostTableViewCell
+            ) as? PostTableViewCell
 
-            postCell?.setupCell(model: post)
-            return postCell ?? UITableViewCell()
+            guard let post = posts[safe: indexPath.row],
+                  let postCell = postCell
+            else {
+                return UITableViewCell()
+            }
+
+            postCell.setupCell(model: post)
+            return postCell
         }
     }
 
@@ -76,5 +79,11 @@ final class ProfileTableManager: NSObject, ManagesProfileTable {
             delegate?.didTapPhotosCell()
         }
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            delegate?.removePostFromDatabase(posts[safe: indexPath.row])
+        }
     }
 }
