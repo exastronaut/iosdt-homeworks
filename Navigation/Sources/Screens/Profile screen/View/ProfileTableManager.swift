@@ -81,7 +81,9 @@ final class ProfileTableManager: NSObject, ManagesProfileTable {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             delegate?.removePostFromDatabase(posts[safe: indexPath.row])
         }

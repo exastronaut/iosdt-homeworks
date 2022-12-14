@@ -46,6 +46,7 @@ final class FeedTableManager: NSObject, ManagesFeedTable {
         let cell = tableView.cellForRow(at: indexPath) as? PostTableViewCell
         let doubleTap = DoubleTapGestureForPostCell(target: self, action: #selector(doubleTapped))
         doubleTap.numberOfTapsRequired = 2
+        doubleTap.cell = cell
         doubleTap.post = posts[safe: indexPath.row]
         cell?.addGestureRecognizer(doubleTap)
         tableView.deselectRow(at: indexPath, animated: true)
@@ -53,8 +54,13 @@ final class FeedTableManager: NSObject, ManagesFeedTable {
 
     @objc
     func doubleTapped(_ sender: DoubleTapGestureForPostCell) {
+        UIView.animate(withDuration: 0.2) {
+            sender.cell?.transform = CGAffineTransform(scaleX: 0.97, y: 0.97)
+        } completion: { _ in
+            UIView.animate(withDuration: 0.2) {
+                sender.cell?.transform = .identity
+            }
+        }
         delegate?.didTapPostCell(sender.post)
     }
 }
-
-

@@ -51,6 +51,28 @@ extension ProfilePresenter: ProfileModuleInput {
 // MARK: - ProfileScreenOutput
 
 extension ProfilePresenter: ProfileScreenOutput {
+    func didTapCancelBarButton() {
+        view.configureCancelBarButton(false)
+        view.displayData(viewModel)
+    }
+
+    func didTapSearchBarButton() {
+        view.displaySerachAlert()
+    }
+
+    func didTapSearchAlertButton(_ text: String) {
+        let filteredViewModel = viewModel.filter { post in
+            let separatedStringWithAuthorName = post.author.components(separatedBy: .whitespaces)
+            return separatedStringWithAuthorName.contains { $0.uppercased() == text.uppercased() }
+        }
+        if !filteredViewModel.isEmpty {
+            view.displayData(filteredViewModel)
+            view.configureCancelBarButton(true)
+        } else {
+            view.displayWarningAlert(with: "No results found", message: "Please try again")
+        }
+    }
+
     func removePostFromDatabase(_ post: PostModel?) {
         guard let removedPost = post else { return }
 
@@ -80,7 +102,7 @@ extension ProfilePresenter: ProfileScreenOutput {
                 return
             }
 
-            let posts = response.sorted(by: { $0.uid > $1.uid } )
+            let posts = response.reversed()
             self?.viewModel.append(contentsOf: posts)
             dispatchGroup.leave()
         }
