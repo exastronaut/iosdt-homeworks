@@ -8,5 +8,6 @@
 import UIKit
 
 final class DoubleTapGestureForPostCell: UITapGestureRecognizer {
+    var cell: UITableViewCell?
     var post: PostModel?
 }
