@@ -5,14 +5,23 @@
 //  Created by Artem Sviridov on 29.11.2022.
 //
 
+import CoreData
 import Foundation
 
 protocol StoresProfile: AnyObject {
     var coreDataCoordinator: DatabaseCoordinatable { get set }
+    var container: NSPersistentContainer? { get set }
 }
 
 final class ProfileDataStore: StoresProfile {
     lazy var coreDataCoordinator: DatabaseCoordinatable = createDatabaseCoordinator()
+    var container: NSPersistentContainer?
+
+    init() {
+        createContainer { container in
+            self.container = container
+        }
+    }
 }
 
 private extension ProfileDataStore {
@@ -32,6 +41,17 @@ private extension ProfileDataStore {
             case .failure(let error):
                 fatalError("Unable to create CoreData Database. Error - \(error.localizedDescription)")
             }
+        }
+    }
+
+    func createContainer(completion: @escaping (NSPersistentContainer) -> Void) {
+        let container = NSPersistentContainer(name: "Database")
+        container.loadPersistentStores { _, error in
+            guard error == nil else {
+                fatalError("Failed to load store.")
+            }
+
+            completion(container)
         }
     }
 }
