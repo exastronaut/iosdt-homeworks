@@ -11,6 +11,15 @@ import RealmSwift
 final class RealmCoordinator {
     private let backgroundQueue = DispatchQueue(label: "RealmContext", qos: .background)
     private let mainQueue = DispatchQueue.main
+    private let arrayOfHex: [UInt8] = [
+        0xff, 0xfe, 0x34, 0x00, 0x35, 0x00, 0x32, 0x00, 0x34, 0x00, 0x41, 0x00, 0x34,
+        0x00, 0x42, 0x00, 0x43, 0x00, 0x2d, 0x00, 0x42, 0x00, 0x34, 0x00, 0x34, 0x00,
+        0x34, 0x00, 0x2d, 0x00, 0x34, 0x00, 0x31, 0x00, 0x46, 0x00, 0x33, 0x00, 0x2d,
+        0x00, 0x41, 0x00, 0x45, 0x00, 0x35, 0x00, 0x32, 0x00, 0x2d, 0x00, 0x34, 0x00,
+        0x43, 0x00, 0x41, 0x00, 0x36, 0x00, 0x32, 0x00, 0x45, 0x00, 0x32, 0x00
+    ]
+    private lazy var key = Data(arrayOfHex)
+    private lazy var config = Realm.Configuration(encryptionKey: key)
 
     private func safeWrite(in realm: Realm, _ block: (() throws -> Void)) throws {
         realm.isInWriteTransaction
@@ -24,7 +33,7 @@ extension RealmCoordinator: DatabaseCoordinatable {
                    keyedValues: [[String: Any]],
                    completion: @escaping (Result<[T], DatabaseError>) -> Void) where T: Storable {
         do {
-            let realm = try Realm()
+            let realm = try Realm(configuration: config)
 
             try self.safeWrite(in: realm) {
                 guard let model = model as? Object.Type else {
@@ -55,12 +64,14 @@ extension RealmCoordinator: DatabaseCoordinatable {
                    keyedValues: [String: Any],
                    completion: @escaping (Result<[T], DatabaseError>) -> Void) where T: Storable {
         self.fetch(model, predicate: predicate) { [weak self] result in
+            guard let self = self else { return }
+
             switch result {
             case .success(let fetchedObjects):
                 do {
-                    let realm = try Realm()
+                    let realm = try Realm(configuration: self.config)
 
-                    try self?.safeWrite(in: realm) {
+                    try self.safeWrite(in: realm) {
                         guard let modifiedObject = fetchedObjects.first as? Object else {
                             completion(.failure(.wrongModel))
                             return
@@ -86,7 +97,7 @@ extension RealmCoordinator: DatabaseCoordinatable {
                   predicate: NSPredicate?,
                   completion: @escaping (Result<[T], DatabaseError>) -> Void) where T: Storable {
         do {
-            let realm = try Realm()
+            let realm = try Realm(configuration: config)
 
             if let model = model as? Object.Type {
                 var objects = realm.objects(model)
@@ -114,7 +125,7 @@ extension RealmCoordinator: DatabaseCoordinatable {
                    predicate: NSPredicate?,
                    completion: @escaping (Result<[T], DatabaseError>) -> Void) where T: Storable {
         do {
-            let realm = try Realm()
+            let realm = try Realm(configuration: config)
 
             guard let model = model as? Object.Type else {
                 completion(.failure(.wrongModel))
